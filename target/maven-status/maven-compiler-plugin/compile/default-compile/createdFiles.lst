@@ -1,12 +1,13 @@
 com\mycompany\sistemareciclagem\ResiduoComum.class
-com\mycompany\sistemareciclagem\TipoResiduo.class
 com\mycompany\sistemareciclagem\Pontuavel.class
 com\mycompany\sistemareciclagem\SistemaReciclagem.class
-com\mycompany\sistemareciclagem\Residuo.class
 com\mycompany\sistemareciclagem\Ecoponto.class
-com\mycompany\sistemareciclagem\CorLixeira.class
 com\mycompany\sistemareciclagem\RegistroDescarte.class
 com\mycompany\sistemareciclagem\Recompensa.class
+com\mycompany\sistemareciclagem\Usuario.class
+com\mycompany\sistemareciclagem\TipoResiduo.class
+com\mycompany\sistemareciclagem\ArquivoUtilitarios.class
+com\mycompany\sistemareciclagem\Residuo.class
+com\mycompany\sistemareciclagem\CorLixeira.class
 com\mycompany\sistemareciclagem\Pessoa.class
 com\mycompany\sistemareciclagem\ResiduoEletronico.class
-com\mycompany\sistemareciclagem\Usuario.class

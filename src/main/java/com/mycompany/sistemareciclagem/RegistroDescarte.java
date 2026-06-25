@@ -17,6 +17,15 @@ public class RegistroDescarte {
 
         data = LocalDate.now();
     }
+    
+    public RegistroDescarte(Usuario usuario, Residuo residuo, int quantidade, int pontosGerados, LocalDate data) {
+
+        this.usuario = usuario;
+        this.residuo = residuo;
+        this.quantidade = quantidade;
+        this.pontosGerados = pontosGerados;
+        this.data = data;
+    }
 
     public Usuario getUsuario() {
         return usuario;

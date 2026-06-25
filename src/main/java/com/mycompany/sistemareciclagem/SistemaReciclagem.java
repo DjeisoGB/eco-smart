@@ -6,12 +6,15 @@ import java.util.Scanner;
 public class SistemaReciclagem {
 
     public static void main(String[] args) {
+        
+        
         Scanner sc = new Scanner(System.in);
 
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+        ArrayList<Usuario> usuarios = ArquivoUtilitarios.carregarUsuarios();
         ArrayList<Residuo> residuos = carregarResiduos();
         ArrayList<Recompensa> recompensas = carregarRecompensas();
         ArrayList<Ecoponto> ecopontos = carregarEcopontos(residuos);
+        ArquivoUtilitarios.carregarHistorico(usuarios, residuos);
         
         int opcao;
 
@@ -57,6 +60,7 @@ public class SistemaReciclagem {
                     String senha = sc.nextLine();
                     Usuario usuario = new Usuario(nome, email, senha);
                     usuarios.add(usuario);
+                    ArquivoUtilitarios.salvarUsuarios(usuarios);
                     System.out.println("Usuário cadastrado!");
                     break;
 
@@ -68,7 +72,7 @@ public class SistemaReciclagem {
                     System.out.println("Opção inválida!");
 
             }
-        } while (opcao != 0);
+        } while(opcao != 0);
 
         sc.close();
         
@@ -101,7 +105,7 @@ public class SistemaReciclagem {
             switch (opcao) {
 
                 case 1:
-                    consultarResiduo(sc, residuos, usuarioLogado);
+                    consultarResiduo(sc, residuos, usuarioLogado, usuarios);
                     break;
 
                 case 2:
@@ -109,7 +113,7 @@ public class SistemaReciclagem {
                     break;
 
                 case 3:
-                    registrarDescarte(sc, residuos, usuarioLogado);
+                    registrarDescarte(sc, residuos, usuarioLogado, usuarios);
                     break;
 
                 case 4:
@@ -163,13 +167,13 @@ public class SistemaReciclagem {
         return residuos;
     }
     
-    public static void registrarDescarte(Scanner sc, Usuario usuarioLogado, Residuo residuoSelecionado) {
+    public static void registrarDescarte(Scanner sc, Usuario usuarioLogado, Residuo residuoSelecionado, ArrayList<Usuario> usuarios) {
 
         System.out.print("Quantidade descartada: ");
         int quantidade = sc.nextInt();
         sc.nextLine();
 
-        if (quantidade <= 0) {
+        if(quantidade <= 0) {
             System.out.println("Quantidade inválida!");
             return;
         }
@@ -181,6 +185,8 @@ public class SistemaReciclagem {
         usuarioLogado.getHistorico().add(registro);
 
         usuarioLogado.adicionarPontos(pontos);
+        ArquivoUtilitarios.salvarHistorico(usuarios);
+        ArquivoUtilitarios.salvarUsuarios(usuarios);
         
         System.out.println("\nDescarte registrado com sucesso!");
         System.out.println("Material: " + residuoSelecionado.getNome());
@@ -189,12 +195,12 @@ public class SistemaReciclagem {
         System.out.println("Total de pontos: " + usuarioLogado.getPontos());
     }
     
-    public static void registrarDescarte(Scanner sc, ArrayList<Residuo> residuos, Usuario usuarioLogado) {
+    public static void registrarDescarte(Scanner sc, ArrayList<Residuo> residuos, Usuario usuarioLogado, ArrayList<Usuario> usuarios) {
 
         System.out.println("\n===== REGISTRAR DESCARTE =====");
         TipoResiduo[] tipos = TipoResiduo.values();
 
-        for (int i = 0; i < tipos.length; i++) {
+        for(int i = 0; i < tipos.length; i++) {
             System.out.println((i + 1) + " - " + tipos[i]);
         }
 
@@ -202,7 +208,7 @@ public class SistemaReciclagem {
         int opcaoCategoria = sc.nextInt();
         sc.nextLine();
 
-        if (opcaoCategoria < 1 ||opcaoCategoria > tipos.length) {
+        if(opcaoCategoria < 1 ||opcaoCategoria > tipos.length) {
             System.out.println("Categoria inválida!");
             return;
         }
@@ -215,15 +221,15 @@ public class SistemaReciclagem {
 
         System.out.println("\n===== MATERIAIS =====");
 
-        for (Residuo r : residuos) {
-            if (r.getTipo() == categoriaEscolhida) {
+        for(Residuo r : residuos) {
+            if(r.getTipo() == categoriaEscolhida) {
                 filtrados.add(r);
                 System.out.println(contador + " - " + r.getNome());
                 contador++;
             }
         }
 
-        if (filtrados.isEmpty()) {
+        if(filtrados.isEmpty()) {
             System.out.println("Nenhum material encontrado.");
             return;
         }
@@ -233,22 +239,22 @@ public class SistemaReciclagem {
         int opcaoMaterial = sc.nextInt();
         sc.nextLine();
 
-        if (opcaoMaterial < 1 || opcaoMaterial > filtrados.size()) {
+        if(opcaoMaterial < 1 || opcaoMaterial > filtrados.size()) {
             System.out.println("Material inválido!");
             return;
         }
 
         Residuo residuoSelecionado = filtrados.get(opcaoMaterial - 1);
 
-        registrarDescarte(sc, usuarioLogado, residuoSelecionado);
+        registrarDescarte(sc, usuarioLogado, residuoSelecionado, usuarios);
     }
     
-    public static void consultarResiduo(Scanner sc, ArrayList<Residuo> residuos, Usuario usuarioLogado) {
+    public static void consultarResiduo(Scanner sc, ArrayList<Residuo> residuos, Usuario usuarioLogado, ArrayList<Usuario> usuarios) {
         System.out.println("\n===== CATEGORIAS =====");
         
         TipoResiduo[] tipos = TipoResiduo.values();
         
-        for (int i = 0; i < tipos.length; i++) {
+        for(int i = 0; i < tipos.length; i++) {
             System.out.println((i + 1) + " - " + tipos[i]);
         }
 
@@ -257,7 +263,7 @@ public class SistemaReciclagem {
         int opcaoCategoria = sc.nextInt();
         sc.nextLine();
 
-        if (opcaoCategoria < 1 || opcaoCategoria > tipos.length) {
+        if(opcaoCategoria < 1 || opcaoCategoria > tipos.length) {
             System.out.println("Categoria inválida!");
             return;
         }
@@ -269,15 +275,15 @@ public class SistemaReciclagem {
         
         int contador = 1;
         
-        for (Residuo r : residuos) {
-            if (r.getTipo() == categoriaEscolhida) {
+        for(Residuo r : residuos) {
+            if(r.getTipo() == categoriaEscolhida) {
                 filtrados.add(r);
                 System.out.println(contador + " - " + r.getNome());
                 contador++;
             }
         }
         
-        if (filtrados.isEmpty()) {
+        if(filtrados.isEmpty()) {
             System.out.println("Nenhum resíduo cadastrado nessa categoria.");
             return;
         }
@@ -286,7 +292,7 @@ public class SistemaReciclagem {
         int opcaoMaterial = sc.nextInt();
         sc.nextLine();
         
-        if (opcaoMaterial < 1 || opcaoMaterial > filtrados.size()) {
+        if(opcaoMaterial < 1 || opcaoMaterial > filtrados.size()) {
             System.out.println("Material inválido!");
             return;
         }
@@ -306,8 +312,8 @@ public class SistemaReciclagem {
         sc.nextLine();
 
         //REGISTRAR DESCARTE DEPOIS DA CONSULTA
-        if (resposta == 1) {
-            registrarDescarte(sc, usuarioLogado, residuoSelecionado);
+        if(resposta == 1) {
+            registrarDescarte(sc, usuarioLogado, residuoSelecionado, usuarios);
         }
     }
     
@@ -320,13 +326,13 @@ public class SistemaReciclagem {
         System.out.println("Pontos: " + usuarioLogado.getPontos());
 
         System.out.println("\n===== HISTÓRICO =====");
-
-        if (usuarioLogado.getHistorico().isEmpty()) {
+        
+        if(usuarioLogado.getHistorico().isEmpty()) {
             System.out.println("Nenhum descarte registrado.");
             return;
         }
 
-        for (RegistroDescarte r : usuarioLogado.getHistorico()) {
+        for(RegistroDescarte r : usuarioLogado.getHistorico()) {
             System.out.println("----------------------");
             System.out.println("Data: " + r.getData());
             System.out.println("Material: " + r.getResiduo().getNome());
@@ -338,7 +344,7 @@ public class SistemaReciclagem {
     public static void mostrarRanking(ArrayList<Usuario> usuarios) {
         System.out.println("\n===== RANKING =====");
 
-        if (usuarios.isEmpty()){
+        if(usuarios.isEmpty()){
             System.out.println("Nenhum usuário cadastrado.");
             return;
         }
@@ -349,7 +355,7 @@ public class SistemaReciclagem {
 
         int posicao = 1;
 
-        for (Usuario u : ranking) {
+        for(Usuario u : ranking) {
             System.out.println(posicao + "° - " + u.getNome() + " | " + u.getPontos()+ " pontos");
             posicao++;
         }
@@ -373,15 +379,15 @@ public class SistemaReciclagem {
 
         int contador = 1;
 
-        for (Recompensa r : recompensas) {
+        for(Recompensa r : recompensas) {
 
             System.out.println("\n" + contador + " - " + r.getNome());
             System.out.println("Descrição: " + r.getDescricao());
             System.out.println("Custo: " + r.getCustoPontos() + " pontos");
 
-            if (usuarioLogado.getPontos() >= r.getCustoPontos()) {
+            if(usuarioLogado.getPontos() >= r.getCustoPontos()) {
                 System.out.println("Status: Disponível");
-            } else {
+            } else{
                 System.out.println("Status: Pontos insuficientes");
             }
 
@@ -394,18 +400,18 @@ public class SistemaReciclagem {
         int opcao = sc.nextInt();
         sc.nextLine();
         
-        if (opcao == 0){
+        if(opcao == 0){
             return;
         }
 
-        if (opcao < 1 || opcao > recompensas.size()) {
+        if(opcao < 1 || opcao > recompensas.size()) {
             System.out.println("Opção inválida!");
             return;
         }
 
         Recompensa recompensaSelecionada = recompensas.get(opcao - 1);
         
-        if (usuarioLogado.getPontos() < recompensaSelecionada.getCustoPontos()) {
+        if(usuarioLogado.getPontos() < recompensaSelecionada.getCustoPontos()) {
             System.out.println("\nPontos insuficientes!");
             return;
         }
@@ -418,7 +424,7 @@ public class SistemaReciclagem {
         int confirmar = sc.nextInt();
         sc.nextLine();
         
-        if (confirmar != 1) {
+        if(confirmar != 1) {
             System.out.println("Resgate cancelado!");
             return;
         }
@@ -435,13 +441,12 @@ public class SistemaReciclagem {
         ArrayList<Ecoponto> ecopontos = new ArrayList<>();
 
         Ecoponto centro = new Ecoponto("Ecoponto Centro","Av. Rio Branco, 100");
-
         Ecoponto camobi = new Ecoponto("Ecoponto Camobi", "Faixa Nova, 200");
 
-        for (Residuo r : residuos) {
-            if (r.getTipo() == TipoResiduo.ELETRONICO) {
+        for(Residuo r : residuos) {
+            if(r.getTipo() == TipoResiduo.ELETRONICO) {
                 centro.adicionarResiduo(r);
-            } else {
+            } else{
                 camobi.adicionarResiduo(r);
             }
         }
@@ -455,11 +460,11 @@ public class SistemaReciclagem {
     public static void mostrarEcopontos(ArrayList<Ecoponto> ecopontos) {
         System.out.println("\n===== ECOPONTOS =====");
 
-        for (Ecoponto e : ecopontos) {
+        for(Ecoponto e : ecopontos) {
             System.out.println("\nNome: " + e.getNome());
             System.out.println("Endereço: "+ e.getEndereco());
             System.out.println("Resíduos aceitos:");
-            for (Residuo r : e.getResiduosAceitos()){
+            for(Residuo r : e.getResiduosAceitos()){
                 System.out.println("- " + r.getNome());
             }
         }
