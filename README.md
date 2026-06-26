@@ -41,14 +41,14 @@ usuarios.txt, onde ele armazena coisas como:
 * Email
 * Senha
 * Pontos
-onde ele fica no seguinte formato: Nome;Email;Senha;Pontos
+* onde ele fica no seguinte formato: Nome;Email;Senha;Pontos
 e o historico.txt, que armazena:
 * Email do usuário
 * Nome do resíduo
 * Quantidade
 * Pontos obtidos
 * Data
-ficando no seguinte formato: Email;Residuo;Quantidade;Pontos;Data
+* ficando no seguinte formato: Email;Residuo;Quantidade;Pontos;Data
 
 Conceitos de POO utilizados: encapsulamento, herança, polimorfismo, abstração
 
