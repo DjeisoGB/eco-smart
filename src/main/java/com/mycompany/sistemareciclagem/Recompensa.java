@@ -4,11 +4,13 @@ public class Recompensa {
     private String nome;
     private String descricao;
     private int custoPontos;
+    private String localRetirada;
 
-    public Recompensa(String nome, String descricao, int custoPontos) {
+    public Recompensa(String nome, String descricao, int custoPontos, String localRetirada) {
         this.nome = nome;
         this.descricao = descricao;
         this.custoPontos = custoPontos;
+        this.localRetirada = localRetirada;
     }
 
     public String getNome() {
@@ -21,6 +23,10 @@ public class Recompensa {
 
     public int getCustoPontos() {
         return custoPontos;
+    }
+    
+    public String getLocalRetirada() {
+        return localRetirada;
     }
 
     public void setNome(String nome) {

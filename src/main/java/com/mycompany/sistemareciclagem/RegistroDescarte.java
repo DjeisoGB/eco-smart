@@ -8,6 +8,7 @@ public class RegistroDescarte {
     private int quantidade;
     private int pontosGerados;
     private LocalDate data;
+    private String localDescarte;
 
     public RegistroDescarte(Usuario usuario, Residuo residuo, int quantidade, int pontosGerados) {
         this.usuario = usuario;
@@ -15,6 +16,8 @@ public class RegistroDescarte {
         this.quantidade = quantidade;
         this.pontosGerados = pontosGerados;
 
+        this.localDescarte = residuo.getLocalDescarte();
+        
         data = LocalDate.now();
     }
     
@@ -24,7 +27,8 @@ public class RegistroDescarte {
         this.residuo = residuo;
         this.quantidade = quantidade;
         this.pontosGerados = pontosGerados;
-        this.data = data;
+        this.data = data;        
+        this.localDescarte = residuo.getLocalDescarte();
     }
 
     public Usuario getUsuario() {
@@ -46,4 +50,8 @@ public class RegistroDescarte {
     public LocalDate getData() {
         return data;
     }    
+    
+    public String getLocalDescarte() {
+        return localDescarte;
+    }
 }
