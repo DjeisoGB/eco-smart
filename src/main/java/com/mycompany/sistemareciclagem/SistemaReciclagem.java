@@ -529,6 +529,7 @@ public class SistemaReciclagem {
         }
     }
     
+    //Serve para fazer a leitura da opção que o usuario escolher
     public static int lerInteiro(Scanner sc) {
 
         while (!sc.hasNextInt()) {
