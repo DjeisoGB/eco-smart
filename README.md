@@ -59,7 +59,9 @@ Perguntas feitas para a ferramenta:
 "bibliotecas para mexer com arquivos em java"
 "analise se existe a possibilidade de o codigo quebrar nesta parte"
 
-
+Uma observação rapida:
+Adicionamos as opções -Dstdout.encoding=UTF-8 e -Dstderr.encoding=UTF-8 nas VM options do NetBeans para que o terminal utilizasse a codificação UTF-8, permitindo a exibição correta de caracteres em português, como acentos e o cedilha.
+para fazer isso basta ir no projeto, clicar com o direito, ir em propriedades, depois na opção run e colocar nas VM options o comando *-Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8*
 
 Desenvolvedores:
 * Djeiso Gabriel Bernardy
